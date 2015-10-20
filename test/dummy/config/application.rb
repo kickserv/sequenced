@@ -4,6 +4,7 @@ require 'rails/all'
 
 Bundler.require
 require "sequenced"
+require 'monogamy'
 
 module Dummy
   class Application < Rails::Application
@@ -53,4 +54,3 @@ module Dummy
     config.assets.version = '1.0'
   end
 end
-

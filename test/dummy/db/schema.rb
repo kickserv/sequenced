@@ -11,98 +11,118 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130715002029) do
+ActiveRecord::Schema.define(version: 20140404195334) do
 
-  create_table "accounts", force: true do |t|
-    t.string   "name"
+  create_table "accounts", force: :cascade do |t|
+    t.string   "name",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "addresses", force: true do |t|
-    t.integer  "account_id"
-    t.string   "city"
+  create_table "addresses", force: :cascade do |t|
+    t.integer  "account_id", limit: 4
+    t.string   "city",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "answers", force: true do |t|
-    t.integer  "question_id"
-    t.text     "body"
-    t.integer  "sequential_id"
+  create_table "answers", force: :cascade do |t|
+    t.integer  "question_id",   limit: 4
+    t.text     "body",          limit: 65535
+    t.integer  "sequential_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "answers", ["question_id"], name: "index_answers_on_question_id"
-  add_index "answers", ["sequential_id"], name: "index_answers_on_sequential_id"
+  add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
+  add_index "answers", ["sequential_id"], name: "index_answers_on_sequential_id", using: :btree
 
-  create_table "comments", force: true do |t|
-    t.integer  "question_id"
-    t.text     "body"
-    t.integer  "sequential_id"
+  create_table "comments", force: :cascade do |t|
+    t.integer  "question_id",   limit: 4
+    t.text     "body",          limit: 65535
+    t.integer  "sequential_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "comments", ["question_id"], name: "index_comments_on_question_id"
+  add_index "comments", ["question_id"], name: "index_comments_on_question_id", using: :btree
 
-  create_table "emails", force: true do |t|
-    t.string   "emailable_type"
-    t.integer  "emailable_id"
-    t.integer  "sequential_id"
-    t.string   "address"
+  create_table "emails", force: :cascade do |t|
+    t.string   "emailable_type", limit: 255
+    t.integer  "emailable_id",   limit: 4
+    t.integer  "sequential_id",  limit: 4
+    t.string   "address",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "invoices", force: true do |t|
-    t.integer  "amount"
-    t.integer  "sequential_id"
-    t.integer  "account_id"
+  create_table "invoices", force: :cascade do |t|
+    t.integer  "amount",        limit: 4
+    t.integer  "sequential_id", limit: 4
+    t.integer  "account_id",    limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "invoices", ["account_id"], name: "index_invoices_on_account_id"
+  add_index "invoices", ["account_id"], name: "index_invoices_on_account_id", using: :btree
 
-  create_table "orders", force: true do |t|
-    t.string   "product"
-    t.integer  "account_id"
+  create_table "monsters", force: :cascade do |t|
+    t.integer  "sequential_id", limit: 4
+    t.string   "type",          limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "questions", force: true do |t|
-    t.string   "summary"
-    t.text     "body"
+  create_table "orders", force: :cascade do |t|
+    t.string   "product",    limit: 255
+    t.integer  "account_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "ratings", force: true do |t|
-    t.integer  "comment_id"
-    t.integer  "score"
-    t.integer  "sequential_id"
+  create_table "policemen", force: :cascade do |t|
+    t.integer  "sequential_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "subscriptions", force: true do |t|
-    t.string   "plan"
-    t.integer  "sequential_id"
+  create_table "products", force: :cascade do |t|
+    t.integer  "account_id",    limit: 4
+    t.integer  "sequential_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "users", force: true do |t|
-    t.integer  "account_id"
-    t.string   "name"
-    t.integer  "custom_sequential_id"
+  create_table "questions", force: :cascade do |t|
+    t.string   "summary",    limit: 255
+    t.text     "body",       limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "users", ["account_id"], name: "index_users_on_account_id"
+  create_table "ratings", force: :cascade do |t|
+    t.integer  "comment_id",    limit: 4
+    t.integer  "score",         limit: 4
+    t.integer  "sequential_id", limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.string   "plan",          limit: 255
+    t.integer  "sequential_id", limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.integer  "account_id",           limit: 4
+    t.string   "name",                 limit: 255
+    t.integer  "custom_sequential_id", limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "users", ["account_id"], name: "index_users_on_account_id", using: :btree
 
 end
